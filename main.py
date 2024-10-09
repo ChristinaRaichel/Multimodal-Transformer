@@ -23,7 +23,11 @@ parser.add_argument('--aligned', action='store_true',
                     help='consider aligned experiment or not (default: False)')
 parser.add_argument('--dataset', type=str, default='mosei_senti',
                     help='dataset to use (default: mosei_senti)')
-parser.add_argument('--data_path', type=str, default='data',
+parser.add_argument('--data_path_train', type=str, default='data/train',
+                    help='path for storing the dataset')
+parser.add_argument('--data_path_valid', type=str, default='data/valid',
+                    help='path for storing the dataset')
+parser.add_argument('--data_path_test', type=str, default='data/test',
                     help='path for storing the dataset')
 
 # Dropouts
@@ -115,9 +119,9 @@ if torch.cuda.is_available():
 
 print("Start loading the data....")
 
-train_data = get_data(args, dataset, 'train')
-valid_data = get_data(args, dataset, 'valid')
-test_data = get_data(args, dataset, 'test')
+train_data = torch.load(data_path_train)
+valid_data = torch.load(data_path_valid)
+test_data = torch.load(data_path_test)
    
 train_loader = DataLoader(train_data, batch_size=args.batch_size, shuffle=True)
 valid_loader = DataLoader(valid_data, batch_size=args.batch_size, shuffle=True)
